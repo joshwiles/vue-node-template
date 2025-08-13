@@ -1,14 +1,18 @@
 const request = require('supertest');
 const app = require('../server');
 
-describe('Health Check Endpoint', () => {
-  test('GET /api/health should return 200 and server status', async () => {
-    const response = await request(app).get('/api/health');
-    
+describe('Health Check', () => {
+  test('GET /health should return 200', async () => {
+    const response = await request(app).get('/health');
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('status', 'OK');
-    expect(response.body).toHaveProperty('message', 'Server is running');
     expect(response.body).toHaveProperty('timestamp');
-    expect(response.body).toHaveProperty('uptime');
   });
-}); 
+
+  test('GET / should return welcome message', async () => {
+    const response = await request(app).get('/');
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('message');
+    expect(response.body).toHaveProperty('status', 'running');
+  });
+});

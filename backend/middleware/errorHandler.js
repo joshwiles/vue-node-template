@@ -1,38 +1,38 @@
+// Error handling middleware
 const errorHandler = (err, req, res, next) => {
-  const NODE_ENV = process.env.NODE_ENV || 'development';
-  
-  console.error(err.stack);
-  
+  console.error('Error:', err);
+
   // Default error
   let error = {
-    message: NODE_ENV === 'development' ? err.message : 'Internal server error',
+    message: err.message || 'Internal Server Error',
     status: err.status || 500
   };
 
-  // Mongoose validation error
+  // Validation errors
   if (err.name === 'ValidationError') {
+    error.status = 400;
     error.message = 'Validation Error';
-    error.status = 400;
-    error.details = Object.values(err.errors).map(e => e.message);
+    error.details = err.details;
   }
 
-  // Mongoose duplicate key error
-  if (err.code === 11000) {
-    error.message = 'Duplicate field value entered';
-    error.status = 400;
+  // JWT errors
+  if (err.name === 'JsonWebTokenError') {
+    error.status = 401;
+    error.message = 'Invalid token';
   }
 
-  // Mongoose cast error
+  // Cast errors (MongoDB ObjectId)
   if (err.name === 'CastError') {
-    error.message = 'Invalid ID format';
     error.status = 400;
+    error.message = 'Invalid ID format';
   }
 
   res.status(error.status).json({
+    success: false,
     error: error.message,
-    ...(NODE_ENV === 'development' && { stack: err.stack }),
-    ...(error.details && { details: error.details })
+    ...(error.details && { details: error.details }),
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
 };
 
-module.exports = errorHandler; 
+module.exports = errorHandler;

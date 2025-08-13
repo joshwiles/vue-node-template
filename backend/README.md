@@ -1,96 +1,87 @@
-# Backend Template
+# Express.js Backend Template
 
-A Node.js/Express server template for Vue.js projects.
+A clean, minimal Express.js backend template for building RESTful APIs.
 
 ## Features
 
-- Express.js server with middleware setup
-- CORS enabled for frontend communication
-- Static file serving for Vue.js builds
-- API route structure
-- Error handling middleware
-- Environment variable support
-- Development and production scripts
+- **Express.js** - Fast, unopinionated web framework
+- **Security** - Helmet.js for security headers
+- **CORS** - Cross-origin resource sharing support
+- **Logging** - Morgan for HTTP request logging
+- **Environment** - Dotenv for environment variables
+- **Error Handling** - Centralized error handling middleware
 
-## Quick Start
+## Getting Started
+
+### Prerequisites
+
+- Node.js 16+
+- npm or yarn
+
+### Installation
 
 1. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-2. Create environment file:
-   ```bash
-   cp .env.example .env
-   ```
+2. Copy environment file:
+```bash
+cp env.example .env
+```
 
 3. Start development server:
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
-4. Build and start production server:
-   ```bash
-   npm run build
-   npm start
-   ```
+4. Your API will be available at `http://localhost:3000`
 
 ## Available Scripts
 
 - `npm run dev` - Start development server with nodemon
 - `npm start` - Start production server
-- `npm run build` - Build the frontend (if needed)
-- `npm test` - Run tests (configure as needed)
-
-## API Endpoints
-
-### Health Check
-- `GET /api/health` - Server status and timestamp
-
-### Hello World
-- `GET /api/hello` - Sample endpoint with query parameter support
-  - Query params: `name` (optional)
-
-## Environment Variables
-
-Create a `.env` file in the backend directory:
-
-```env
-PORT=3000
-NODE_ENV=development
-```
+- `npm test` - Run tests
 
 ## Project Structure
 
 ```
 backend/
 ├── server.js          # Main server file
-├── routes/            # API route modules
-├── middleware/        # Custom middleware
-├── controllers/       # Route controllers
-├── models/           # Data models
-├── utils/            # Utility functions
-└── tests/            # Test files
+├── package.json       # Dependencies and scripts
+├── env.example        # Environment variables template
+├── nodemon.json       # Development configuration
+├── routes/            # API routes (create your own)
+├── middleware/        # Custom middleware (create your own)
+├── utils/             # Utility functions (create your own)
+└── tests/             # Test files (create your own)
 ```
 
-## Adding New Routes
+## API Endpoints
 
-1. Create route files in `routes/` directory
-2. Import and use in `server.js`
-3. Follow RESTful conventions
+- `GET /` - Welcome message
+- `GET /health` - Health check
+- `GET /api/example` - Example API endpoint
 
-## Deployment
+## Customization
 
-This template is ready for deployment on:
-- Heroku
-- Vercel
-- Railway
-- DigitalOcean App Platform
-- AWS Elastic Beanstalk
+This template provides a minimal starting point. You can:
 
-## Contributing
+- Add your own routes in the `routes/` directory
+- Create custom middleware in the `middleware/` directory
+- Add database connections and models
+- Implement authentication and authorization
+- Add validation and sanitization
+- Create comprehensive test suites
 
-1. Follow the existing code structure
-2. Add tests for new features
-3. Update documentation
-4. Use conventional commits 
+## Environment Variables
+
+Copy `env.example` to `.env` and configure:
+
+- `PORT` - Server port (default: 3000)
+- `NODE_ENV` - Environment (development/production)
+- `CORS_ORIGIN` - Allowed origin for CORS
+
+## License
+
+MIT

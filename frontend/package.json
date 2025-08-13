@@ -1,5 +1,5 @@
 {
-  "name": "chess-club-template",
+  "name": "vue-frontend-template",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,11 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.5.17",
-    "vue-router": "^4.2.5",
-    "pinia": "^2.1.7",
-    "@headlessui/vue": "^1.7.19",
-    "@heroicons/vue": "^2.1.1"
+    "vue": "^3.5.17"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.0",

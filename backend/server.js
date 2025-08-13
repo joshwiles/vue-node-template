@@ -14,28 +14,37 @@ app.use(morgan('combined'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Import routes
-const indexRoutes = require('./routes/index');
-const authRoutes = require('./routes/auth');
-const eventsRoutes = require('./routes/events');
-const membersRoutes = require('./routes/members');
-const lessonsRoutes = require('./routes/lessons');
-const contactRoutes = require('./routes/contact');
-
 // Routes
-app.use('/', indexRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/events', eventsRoutes);
-app.use('/api/members', membersRoutes);
-app.use('/api/lessons', lessonsRoutes);
-app.use('/api/contact', contactRoutes);
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Welcome to your Express.js API',
+    version: '1.0.0',
+    status: 'running'
+  });
+});
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// Example API endpoint
+app.get('/api/example', (req, res) => {
+  res.json({
+    message: 'This is an example API endpoint',
+    data: {
+      items: ['item1', 'item2', 'item3'],
+      count: 3
+    }
+  });
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ 
     error: 'Something went wrong!',
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Internal server error'
+    message: err.message 
   });
 });
 
@@ -44,7 +53,11 @@ app.use('*', (req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
+// Start server
 app.listen(PORT, () => {
-  console.log(`♔ PawnUp Chess Club API server running on port ${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-}); 
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📱 Health check: http://localhost:${PORT}/health`);
+  console.log(`🔗 API base: http://localhost:${PORT}/api`);
+});
+
+module.exports = app;
